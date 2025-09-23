@@ -14,7 +14,9 @@ for(let i=0;i<allBoxes.length;i++){
 
               const dropEle=e.target//.closest('.div');
               const dropBackground=window.getComputedStyle(dropEle).backgroundImage;
-                
+
+				if (!dropEle || dropEle === dragEle) return;
+				
               dragEle.style.backgroundImage=dropBackground;
               dropEle.style.backgroundImage=dragBackground;
 
