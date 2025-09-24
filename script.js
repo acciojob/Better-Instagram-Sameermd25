@@ -1,27 +1,43 @@
-//your code here
-const allBoxes=document.querySelectorAll(".image");
-for(let i=0;i<allBoxes.length;i++){
-            allBoxes[i].addEventListener("dragstart",(e)=>{
-                e.dataTransfer.setData("text",e.target.id);
+
+
+        const allBoxes = document.querySelectorAll(".div");
+
+
+        for (let i = 0; i < allBoxes.length; i++) {
+            allBoxes[i].addEventListener("dragstart", (e) => {
+                //console.log("dragstart",e)
+                e.dataTransfer.setData("text", allBoxes[i].id);
             })
-            allBoxes[i].addEventListener("dragover",(e)=>{
+            allBoxes[i].addEventListener("dragover", (e) => {
                 e.preventDefault();
             })
-            allBoxes[i].addEventListener("drop",(e)=>{
-              const dragEleId=e.dataTransfer.getData("text") ;
-              const dragEle=document.getElementById(dragEleId);
-              const dragBackground=window.getComputedStyle(dragEle).backgroundImage;
+            allBoxes[i].addEventListener("drop", (e) => {
+                //e.preventDefault();
+                const dragEleId = e.dataTransfer.getData("text");
 
-              const dropEle=e.target//.closest('.div');
-              const dropBackground=window.getComputedStyle(dropEle).backgroundImage;
+                const dragEle = document.getElementById(dragEleId);
 
-				if (!dropEle || dropEle === dragEle) return;
-				
-              dragEle.style.backgroundImage=dropBackground;
-              dropEle.style.backgroundImage=dragBackground;
+                console.log(dragEle,dragEleId,'drag ele')
 
-              let temp=dragEle.innerText;
-              dragEle.innerText=dropEle.innerText;
-              dropEle.innerText=temp;
+
+                const dropEle = e.currentTarget;
+
+
+                const dragImg = dragEle.querySelector("img");
+                const dropImg = dropEle.querySelector("img");
+
+                // swap image src
+                const tempSrc = dragImg.src;
+                dragImg.src = dropImg.src;
+                dropImg.src = tempSrc;
+
+                // get <p> inside both divs
+                const dragText = dragEle.querySelector("p");
+                const dropText = dropEle.querySelector("p");
+
+                // swap text
+                const tempText = dragText.innerText;
+                dragText.innerText = dropText.innerText;
+                dropText.innerText = tempText;
             })
         }
