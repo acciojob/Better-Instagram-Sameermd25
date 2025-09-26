@@ -6,7 +6,7 @@
         for (let i = 0; i < allBoxes.length; i++) {
             allBoxes[i].addEventListener("dragstart", (e) => {
                 //console.log("dragstart",e)
-                e.dataTransfer.setData("text", allBoxes[i].id);
+                e.dataTransfer.setData("text", e.currentTarget.id);
             })
             allBoxes[i].addEventListener("dragover", (e) => {
                 e.preventDefault();
@@ -22,12 +22,21 @@
 
                 const dropEle = e.currentTarget;
 
+				console.log(dropEle);
 
                 const dragImg = dragEle.querySelector("img");
                 const dropImg = dropEle.querySelector("img");
 
-                // swap image src
-                const tempSrc = dragImg.src;
+				// Swap innerHTML
+			    const tempHTML = dragEle.innerHTML;
+			    dragEle.innerHTML = dropEle.innerHTML;
+			    dropEle.innerHTML = tempHTML;
+
+				//or
+                
+                /*
+				// swap image src
+				const tempSrc = dragImg.src;
                 dragImg.src = dropImg.src;
                 dropImg.src = tempSrc;
 
@@ -38,6 +47,6 @@
                 // swap text
                 const tempText = dragText.innerText;
                 dragText.innerText = dropText.innerText;
-                dropText.innerText = tempText;
+                dropText.innerText = tempText;*/
             })
         }
